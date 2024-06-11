@@ -12,7 +12,7 @@ class AdapterClass:
         self.pipeline.scheduler = DDIMScheduler.from_config(self.pipeline.scheduler.config)
         self.pipeline.load_ip_adapter("h94/IP-Adapter", subfolder="models", weight_name="ip-adapter-full-face_sd15.bin")
         self.pipeline.set_ip_adapter_scale(0.5)
-        self.generator = torch.Generator(device="gpu").manual_seed(26)
+        self.generator = torch.Generator(device="cpu").manual_seed(26)
         self.image = load_image("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/ip_adapter_einstein_base.png")
         
     

@@ -45,6 +45,7 @@ async def echo_handler(message: types.Message) -> None:
             adapter = AdapterClass()
             image = adapter.prompt(text)
             print(image)
+            await message.answer_photo(photo=image)
         # Send a copy of the received message
         await message.send_copy(chat_id=message.chat.id)
     except TypeError:
