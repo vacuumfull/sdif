@@ -2,7 +2,7 @@ import asyncio
 import logging
 import sys
 from os import getenv
-from bot import AdapterClass
+from adapter import AdapterClass
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
