@@ -2,7 +2,7 @@ import asyncio
 import logging
 import sys
 from os import getenv
-
+from bot import AdapterClass
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
@@ -12,6 +12,7 @@ from aiogram.utils.markdown import hbold
 
 # Bot token can be obtained via https://t.me/BotFather
 TOKEN = getenv("BOT_API_KEY")
+PROMPT_COMMAND = "/prompt"
 
 # All handlers should be attached to the Router (or Dispatcher)
 dp = Dispatcher()
@@ -38,6 +39,12 @@ async def echo_handler(message: types.Message) -> None:
     By default, message handler will handle all message types (like a text, photo, sticker etc.)
     """
     try:
+        print(message.text)
+        if PROMPT_COMMAND in message.text:
+            text = message.text.replace(PROMPT_COMMAND, '')
+            adapter = AdapterClass()
+            image = adapter.prompt(text)
+            print(image)
         # Send a copy of the received message
         await message.send_copy(chat_id=message.chat.id)
     except TypeError:
