@@ -44,8 +44,10 @@ async def echo_handler(message: types.Message) -> None:
             text = message.text.replace(PROMPT_COMMAND, '')
             adapter = AdapterClass()
             image = adapter.prompt(text)
-            print(image)
-            await message.answer_photo(photo=AdapterClass.get_photo(image))
+            filename = AdapterClass.save_image(image)
+            print(filename)
+            await message.answer_photo(photo=types.FSInputFile(path=f'./{filename}'), caption="Some kind of caption")
+            AdapterClass.remove_image(filename)
         # Send a copy of the received message
         await message.send_copy(chat_id=message.chat.id)
     except TypeError:
