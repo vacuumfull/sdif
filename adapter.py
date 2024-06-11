@@ -1,6 +1,7 @@
 import torch
 from diffusers import StableDiffusionPipeline, DDIMScheduler
 from diffusers.utils import load_image
+from io import BytesIO
 
 
 class AdapterClass:
@@ -25,3 +26,11 @@ class AdapterClass:
             generator=self.generator,
         ).images[0]
         return image
+    
+    @staticmethod
+    def get_photo(image):
+        bio = BytesIO()
+        bio.name = 'image.jpeg'
+        image.save(bio, 'JPEG')
+        bio.seek(0)
+        return bio
