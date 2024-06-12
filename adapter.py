@@ -53,7 +53,7 @@ class StableDif:
         return self.image_sd.save(image)
 
     def delete_image(self, filename):
-        return self.image_sd.delete(filename)
+        return self.image_sd.remove(filename)
 
 
 class AdapterClass:
