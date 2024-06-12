@@ -32,11 +32,11 @@ class StableDif:
         self.generator = torch.Generator(device="cpu").manual_seed(26)
         self.model_path = f"{MODEL_PATH}/Reliberate_v3.safetensors"
         self.pipeline = StableDiffusionPipeline.from_pretrained(
-            self.model_name,
+            self.model_path,
             torch_dtype=torch.float16,
         ).to("cuda")
         self.pipeline_text_to_image = AutoPipelineForText2Image.from_pretrained(
-            self.model_name, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+            self.model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
         ).to("cuda")
         self.pipeline.scheduler = DDIMScheduler.from_config(self.pipeline.scheduler.config)
         if use_adapter:
