@@ -9,7 +9,7 @@ import base64
 MODEL_PATH = '../stable-diffusion-webui/models/Stable-diffusion/'
 IMAGE_URL ='./images/'
 NEGATIVE_PROMPT = '(deformed, distorted, disfigured:1.3), poorly drawn,bad anatomy, wrong anatomy, extralimb, missing limb, floating limbs, (mutated hands and fingers:1.4), disconnected limbs, mutation, mutated, ugly, disgusting, blurry, amputation'
-NUM_STEPS = 25
+NUM_STEPS = 50
 
 class ImageSd:
     def __init__(self, filename: str = None):
@@ -35,7 +35,7 @@ class StableDif:
         self.model_path = f"{MODEL_PATH}{self.model_name}.safetensors"
         self.pipeline = StableDiffusionPipeline.from_single_file(
             self.model_path,
-            generator=torch.Generator(device="cpu").manual_seed(26),
+            generator=torch.Generator(device="cpu").manual_seed(126),
             torch_dtype=torch.float16,
             use_safetensors=True,
             num_inference_steps=NUM_STEPS,
@@ -45,7 +45,7 @@ class StableDif:
         self.pipeline_text_to_image = StableDiffusionPipeline.from_single_file(
             self.model_path, 
             torch_dtype=torch.float16,
-            generator=torch.Generator(device="cpu").manual_seed(26),
+            generator=torch.Generator(device="cpu").manual_seed(126),
             variant="fp16",
             use_safetensors=True,
             num_inference_steps=NUM_STEPS,
