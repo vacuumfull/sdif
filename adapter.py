@@ -5,8 +5,8 @@ from diffusers.utils import load_image
 from io import BytesIO
 import base64
 
-torch.cuda.empty_cache()
 
+MODEL_PATH = '../stable-diffusion-webui/models/Stable-diffusion/'
 IMAGE_URL ='./images/'
 
 class ImageSd:
@@ -30,7 +30,7 @@ class StableDif:
         self.user_id = base64.b64encode(f'{uid}'.encode()).decode() if uid else None
         self.image_sd = ImageSd(self.user_id)
         self.generator = torch.Generator(device="cpu").manual_seed(26)
-        self.model_name = "stabilityai/stable-diffusion-xl-base-1.0"
+        self.model_path = f"{MODEL_PATH}/Reliberate_v3.safetensors"
         self.pipeline = StableDiffusionPipeline.from_pretrained(
             self.model_name,
             torch_dtype=torch.float16,
