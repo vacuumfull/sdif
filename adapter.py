@@ -36,7 +36,7 @@ class StableDif:
             torch_dtype=torch.float16,
             use_safetensors=True
         ).to("cuda")
-        self.pipeline_text_to_image = AutoPipelineForText2Image.from_single_file(
+        self.pipeline_text_to_image = StableDiffusionPipeline.from_single_file(
             self.model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
         ).to("cuda")
         self.pipeline.scheduler = DDIMScheduler.from_config(self.pipeline.scheduler.config)
