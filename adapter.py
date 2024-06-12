@@ -30,10 +30,11 @@ class StableDif:
         self.user_id = base64.b64encode(f'{uid}'.encode()).decode() if uid else None
         self.image_sd = ImageSd(self.user_id)
         self.generator = torch.Generator(device="cpu").manual_seed(26)
-        self.model_path = f"{MODEL_PATH}Reliberate_v3.safetensors"
+        self.model_path = f"{MODEL_PATH}Reliberate_v3"
         self.pipeline = StableDiffusionPipeline.from_pretrained(
             self.model_path,
             torch_dtype=torch.float16,
+            use_safetensors=True
         ).to("cuda")
         self.pipeline_text_to_image = AutoPipelineForText2Image.from_pretrained(
             self.model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
