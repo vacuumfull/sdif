@@ -31,10 +31,11 @@ class StableDif:
         self.model_name = "Reliberate_v3"
         self.user_id = base64.b64encode(f'{uid}'.encode()).decode() if uid else None
         self.image_sd = ImageSd(self.user_id)
-        self.generator = torch.Generator(device="cpu").manual_seed(26)
+     
         self.model_path = f"{MODEL_PATH}{self.model_name}.safetensors"
         self.pipeline = StableDiffusionPipeline.from_single_file(
             self.model_path,
+            generator=torch.Generator(device="cpu").manual_seed(26),
             torch_dtype=torch.float16,
             use_safetensors=True,
             num_inference_steps=NUM_STEPS,
@@ -44,6 +45,7 @@ class StableDif:
         self.pipeline_text_to_image = StableDiffusionPipeline.from_single_file(
             self.model_path, 
             torch_dtype=torch.float16,
+            generator=torch.Generator(device="cpu").manual_seed(26),
             variant="fp16",
             use_safetensors=True,
             num_inference_steps=NUM_STEPS,
