@@ -5,6 +5,7 @@ from diffusers.utils import load_image
 from io import BytesIO
 import base64
 
+torch.cuda.empty_cache()
 
 IMAGE_URL ='./images/'
 
@@ -25,6 +26,7 @@ class ImageSd:
 
 class StableDif:
     def __init__(self, use_adapter = False, uid = None):
+        
         self.user_id = base64.b64encode(f'{uid}'.encode()).decode() if uid else None
         self.image_sd = ImageSd(self.user_id)
         self.generator = torch.Generator(device="cpu").manual_seed(26)
