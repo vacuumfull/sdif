@@ -16,22 +16,24 @@ class ImageSd:
         image.save(f'{IMAGE_URL}{self.filename}')
         return self.filename
 
-    def remove(self):
-        dist = f'{IMAGE_URL}{self.filename}'
-        if os.path.exists(dist):
+    def remove(self, filename):
+        dist = f'{IMAGE_URL}{filename}'
+        is_exists = os.path.exists(dist)
+        if is_exists:
             os.remove(dist)
+        return is_exists
 
 class StableDif:
     def __init__(self, use_adapter = False, uid = None):
         self.user_id = base64.b64encode(f'{uid}'.encode()).decode() if uid else None
-        self.image_sd = ImageSd()
+        self.image_sd = ImageSd(self.user_id)
         self.generator = torch.Generator(device="cpu").manual_seed(26)
         self.model_name = "stabilityai/stable-diffusion-xl-base-1.0"
         self.pipeline = StableDiffusionPipeline.from_pretrained(
             self.model_name,
             torch_dtype=torch.float16,
         ).to("cuda")
-        self.pipline_text_to_image = AutoPipelineForText2Image.from_pretrained(
+        self.pipeline_text_to_image = AutoPipelineForText2Image.from_pretrained(
             self.model_name, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
         ).to("cuda")
         self.pipeline.scheduler = DDIMScheduler.from_config(self.pipeline.scheduler.config)
@@ -44,10 +46,11 @@ class StableDif:
         image = self.pipeline_text_to_image(prompt=text).images[0]
         return image
     
-    def save_image(image):
-        filename = 'test.jpg'
-        image.save(f'./{filename}')
-        return filename
+    def save_image(self, image):
+        return self.image_sd.save(image)
+
+    def delete_image(self, filename):
+        return self.image_sd.delete(filename)
 
 
 class AdapterClass:
