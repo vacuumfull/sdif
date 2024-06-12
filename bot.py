@@ -44,7 +44,7 @@ async def echo_handler(message: types.Message) -> None:
     try:
         if PROMPT_COMMAND in message.text:
             text = message.text.replace(PROMPT_COMMAND, '')
-            sdif = StableDif(id=message.from_user.id)
+            sdif = StableDif(use_adapter=False, uid=message.from_user.id)
             image = sdif.prompt(text)
             filename = sdif.save_image(image)
             print(filename)
