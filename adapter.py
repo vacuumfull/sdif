@@ -30,7 +30,7 @@ class StableDif:
         self.user_id = base64.b64encode(f'{uid}'.encode()).decode() if uid else None
         self.image_sd = ImageSd(self.user_id)
         self.generator = torch.Generator(device="cpu").manual_seed(26)
-        self.model_path = f"./Reliberate_v3"
+        self.model_path = f"runwayml/stable-diffusion-v1-5"
         self.pipeline = StableDiffusionPipeline.from_pretrained(
             self.model_path,
             torch_dtype=torch.float16,
